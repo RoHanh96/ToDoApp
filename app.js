@@ -1,6 +1,7 @@
-var express = require('express');
-
-var app = express();
+const express = require('express');
+const app = express();
+const port = process.env.PORT;
+require ('./db/db.js');
 
 var toDoController = require('./controllers/ToDoController');
 
@@ -14,6 +15,6 @@ app.use(express.static('./public'));
 toDoController(app);
 
 //listen to port
-app.listen(3000);
-console.log('You are listening on port 3000');
+app.listen(port);
+console.log('You are listening on port ${port}');
 
