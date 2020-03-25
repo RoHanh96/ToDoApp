@@ -34,10 +34,29 @@ router.post('/login',　async (req, res) => {
     }
 });
 
-//User access user's resource
-router.get('/user/me', auth, async(req, res) => {
-    //View user profile
-    res.send(req.user);
+//when use want to logout in only current browser, other browser or device that using logged in can't be logged out
+router.post('/user/todo/logout', auth, async(req, res) => {
+    try {
+        //Only remoe token that equal to sent token
+        req.user.tokens =  req.user.tokens.filter(function (token) {
+            return token.token != req.token
+        });
+        await req.user.save();
+        res.send("Log out success!");
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
+
+//when use want to logout from all deveice that user is logging in
+router.post('/user/todo/logoutall', auth, async(req, res) => {
+    try {
+        req.user.tokens.splice(0, req.user.tokens.length);
+        await req.user.save();
+        res.send("Log out success");
+    } catch (error) {
+        res.status(500).send(error);
+    }
 });
 
 module.exports = router;
