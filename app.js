@@ -16,6 +16,10 @@ app.use(express.static('./public'));
 app.use(express.json());
 app.use(bodyParser.urlencoded({extended: false}))
 
+//index
+app.get('/', function (req, res) {
+    res.render('login');
+});
 //call controller
 toDoController(app);
 app.use(userRouter);
