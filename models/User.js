@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const dotenv = require("dotenv");
+
+dotenv.config();
+
 
 const userSchema = mongoose.Schema({
     name: {
@@ -15,7 +19,7 @@ const userSchema = mongoose.Schema({
         unique:true,
         lowercase: true,
         validate: value => {
-            if (!validator.isEmail(true)) {
+            if (!validator.isEmail(value)) {
                 throw new Error({error: 'Invalid Email Addresss'})
             }
         }
@@ -54,7 +58,7 @@ userSchema.methods.generateAuthToken = async function() {
 
 userSchema.statics.findByCredentials = async function (email, password) {
     //Search user by email and password
-    let user = await User.findOne({ email });
+    const user = await User.findOne({ email });
     if (!user) {
         throw new Error({ error: 'Invalid login credentials' });
     }
