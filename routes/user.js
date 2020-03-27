@@ -2,6 +2,9 @@ const express = require('express');
 const User = require('../models/User');
 const auth = require('../middleware/auth');
 const router = express.Router();
+// const bodyParser = require('body-parser');
+
+// var urlencodeParser = bodyParser.urlencoded({extended: false});
 
 //Create new user
 router.post('/createUser', async (req, res) => {
@@ -18,19 +21,21 @@ router.post('/createUser', async (req, res) => {
 });
 
 //User login
-router.post('/login',　async (req, res) => {
+router.post('/login', async (req, res) => {
     //Login a registred user
     try {
         const { email, password } = req.body;
         const user = await User.findByCredentials(email, password);
         if (!user) {
-            return res.status(401).send({error: 'Login failed! Check authentication credentials!'});
+            return res.render('login', {errors: 'Login failed! Check authentication credentials!'});
+            // return res.status(401).send({error: 'Login failed! Check authentication credentials!'});
         }
         //With each successfull login, create an token and save them to tokens field on databases
-        const token = await user.generateAuthToken();
+        // const token = await user.generateAuthToken();
+        const token = "test";
         res.send({ user, token });
     } catch (error) {
-        res.status(400).send(error);
+        res.render('login', {errors: error.message});
     }
 });
 

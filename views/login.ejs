@@ -2,19 +2,30 @@
     <head>
         <title>Login</title>
         <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+        <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
         <link href="/assets/login.css" rel="stylesheet" type="text/css">
         <script type="text/javascript" src="/assets/login.js"></script>
     </head>
     <body>
         <div class="container">
             <section id="content">
-                <form action="">
+                <form id = "form" action="/login" method="post">
                     <h1>Login Form</h1>
+                    <% if (locals.errors) { %>
+                        <div class="alert alert-danger" role="alert"><%= errors %></div>
+                    <% } %>
                     <div>
-                        <input type="text" placeholder="Username" required="" id="username" />
+                        <input type="text" placeholder="Email" required="" id="email" name="email" />
                     </div>
                     <div>
-                        <input type="password" placeholder="Password" required="" id="password" />
+                        <input type="password" placeholder="Password" required="" id="password" name="password"/>
                     </div>
                     <div>
                         <input type="submit" value="Log in" />
@@ -22,8 +33,9 @@
                         <a href="#">Register</a>
                     </div>
                 </form><!-- form -->
+                <a href="/user/todo" id="user"></a>
                 <div class="button">
-                    <a href="#">Download source file</a>
+                    <a href="https://codepen.io/bbodine1/pen/hflzK">Source for this template</a>
                 </div><!-- button -->
             </section><!-- content -->
         </div><!-- container -->

@@ -5,6 +5,8 @@ dotenv.config();
 
 //Running first when access user's info page, such as /user/me url
 const auth = async(req, res, next) => {
+    console.log(req.header('Authorization'));
+    console.log("fdf" + req);
     const token = req.header('Authorization').replace('Bearer ', '');
     try {
         //Split token sent to object data
@@ -14,8 +16,8 @@ const auth = async(req, res, next) => {
         if (!user) {
             throw new Error();
         }
-        req.user = user;
-        req.token = token;
+        // req.user = user;
+        // req.token = token;
         next();
     } catch (error) {
         res.status(401).send({ error: 'Not authorized to access this resource'});
