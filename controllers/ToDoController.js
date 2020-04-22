@@ -1,20 +1,21 @@
-var bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
+const auth = require('../middleware/auth');
 
-var data = [{item: 'Get Milk'}, {item: 'Play Soccer'}, {item: 'Meet girlfriend'}];
+const data = [{item: 'Get Milk'}, {item: 'Play Soccer'}, {item: 'Meet girlfriend'}];
 var urlencodeParser = bodyParser.urlencoded({extended: false});
 
 module.exports = function(app) {
 
-    app.get('/todo', function(req, res){
+    app.get('/user/todo', auth, function(req, res){
         res.render('todo', {todos: data});
     });
 
-    app.post('/todo', urlencodeParser, function(req, res){
+    app.post('/user/todo', urlencodeParser, function(req, res){
         data.push(req.body);
-        res.json(data);        
+        res.json(data);
     });
 
-    app.delete('/todo/:item',function(req, res){
+    app.delete('/user/todo/:item',function(req, res){
         data = data.filter(function(task){
             return task.item.replace(/ /g, '-') !== req.params.item;
         });
